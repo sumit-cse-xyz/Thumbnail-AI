@@ -15,7 +15,7 @@ jobs:
       - name: Check website availability
         run: |
           STATUS=$(curl -L -sS -o /dev/null -w "%{http_code}" \
-          https://ai-thumbnail-2.youware.app)
+          https://ai-thumbnail-2.youware.app
 
           echo "Website HTTP Status: $STATUS"
 
