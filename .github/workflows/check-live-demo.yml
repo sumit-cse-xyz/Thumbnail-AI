@@ -1,0 +1,21 @@
+
+name: Check Live Demo
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  check-website:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check website availability
+        run: |
+          curl -L --fail --silent --show-error \
+          https://ai-thumbnail-2.youware.app \
+          -o /dev/null
+
+          echo "Live website is accessible!"
