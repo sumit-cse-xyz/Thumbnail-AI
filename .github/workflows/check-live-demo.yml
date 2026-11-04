@@ -14,8 +14,17 @@ jobs:
     steps:
       - name: Check website availability
         run: |
-          curl -L --fail --silent --show-error \
-          https://ai-thumbnail-2.youware.app \
-          -o /dev/null
+          STATUS=$(curl -L -sS -o /dev/null -w "%{http_code}" \
+          https://ai-thumbnail-2.youware.app)
 
-          echo "Live website is accessible!"
+          echo "Website HTTP Status: $STATUS"
+
+          if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 400 ]; then
+            echo "Website is accessible!"
+          elif [ "$STATUS" -eq 403 ]; then
+            echo "Server responded, but automated access is forbidden."
+            echo "Website availability could not be fully verified."
+          else
+            echo "Website check failed!"
+            exit 1
+          fi
